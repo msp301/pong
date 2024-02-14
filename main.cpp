@@ -16,10 +16,11 @@ int main(int argv, char **args) {
         return 1;
     }
 
-    SDL_Surface *surface = SDL_GetWindowSurface(window);
-    SDL_FillRect(surface, nullptr, SDL_MapRGB(surface->format, 0xFF, 0xFF, 0xFF));
-
-    SDL_UpdateWindowSurface(window);
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (renderer == nullptr) {
+        std::cout << "Failed to create renderer! SDL_Error: " << SDL_GetError() << std::endl;
+        return 1;
+    }
 
     SDL_Event e;
     bool quit = false;
@@ -30,6 +31,15 @@ int main(int argv, char **args) {
                 std::cout << "Key " << e.key.keysym.scancode << " pressed" << std::endl;
             }
         }
+
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_RenderClear(renderer);
+
+        constexpr SDL_Rect rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
+        SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
+        SDL_RenderFillRect(renderer, &rect);
+
+        SDL_RenderPresent(renderer);
     }
 
     SDL_DestroyWindow(window);
