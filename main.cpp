@@ -29,9 +29,6 @@ int main(int argv, char **args) {
     while (quit == false) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) quit = true;
-            if (e.type == SDL_KEYDOWN) {
-                std::cout << "Key " << e.key.keysym.scancode << " pressed" << std::endl;
-            }
         }
 
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
