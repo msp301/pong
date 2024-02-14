@@ -22,6 +22,8 @@ int main(int argv, char **args) {
         return 1;
     }
 
+    int offset = 0;
+
     SDL_Event e;
     bool quit = false;
     while (quit == false) {
@@ -35,7 +37,18 @@ int main(int argv, char **args) {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
 
-        constexpr SDL_Rect rect = {SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
+        const Uint8* keyState = SDL_GetKeyboardState(nullptr);
+        if (keyState[SDL_SCANCODE_A]) {
+            offset -= 2;
+        }
+        if (keyState[SDL_SCANCODE_E]) {
+            offset += 2;
+        }
+
+        const int pos_x = (SCREEN_WIDTH + offset) / 4;
+        std::cout << "POS X: " << pos_x << std::endl;
+
+        SDL_Rect rect = {pos_x, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
         SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
         SDL_RenderFillRect(renderer, &rect);
 
