@@ -1,8 +1,8 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
-constexpr int SCREEN_HEIGHT = 640;
-constexpr int SCREEN_WIDTH = 480;
+constexpr int SCREEN_WIDTH = 640;
+constexpr int SCREEN_HEIGHT = 480;
 
 int main(int argv, char **args) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
