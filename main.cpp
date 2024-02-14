@@ -46,11 +46,27 @@ int main(int argv, char **args) {
         }
 
         const int pos_x = (SCREEN_WIDTH + offset) / 4;
-        std::cout << "POS X: " << pos_x << std::endl;
 
-        SDL_Rect rect = {pos_x, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2};
+        constexpr int height = SCREEN_HEIGHT / 16;
+        constexpr int width = SCREEN_WIDTH / 4;
+
+        // Render player
+        SDL_Rect player = {pos_x, SCREEN_HEIGHT - height, width, height};
         SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
-        SDL_RenderFillRect(renderer, &rect);
+        SDL_RenderFillRect(renderer, &player);
+
+        // Render opponent
+        SDL_Rect opponent = {pos_x, height, width, height};
+        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
+        SDL_RenderFillRect(renderer, &opponent);
+
+        // Render ball
+        constexpr int ballHeight = SCREEN_HEIGHT / 32;
+        constexpr int ballWidth = SCREEN_WIDTH / 32;
+
+        SDL_Rect ball = {SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, ballWidth, ballHeight};
+        SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, 0xFF);
+        SDL_RenderFillRect(renderer, &ball);
 
         SDL_RenderPresent(renderer);
     }
