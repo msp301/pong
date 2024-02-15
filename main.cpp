@@ -1,8 +1,8 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
-constexpr int SCREEN_WIDTH = 640;
-constexpr int SCREEN_HEIGHT = 480;
+#include "Paddle.h"
+#include "screen.h"
 
 int main(int argv, char **args) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -43,14 +43,14 @@ int main(int argv, char **args) {
         }
 
         const int pos_x = (SCREEN_WIDTH + offset) / 4;
+        constexpr int pos_y = SCREEN_HEIGHT;
 
         constexpr int height = SCREEN_HEIGHT / 16;
         constexpr int width = SCREEN_WIDTH / 4;
 
-        // Render player
-        SDL_Rect player = {pos_x, SCREEN_HEIGHT - height, width, height};
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
-        SDL_RenderFillRect(renderer, &player);
+        auto* player = new Paddle(renderer);
+        player->move(pos_x, pos_y);
+        player->render();
 
         // Render opponent
         SDL_Rect opponent = {pos_x, height, width, height};
