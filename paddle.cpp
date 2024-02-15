@@ -5,6 +5,10 @@ Paddle::Paddle(SDL_Renderer *renderer) {
     position = new Position(0, 0);
 }
 
+Position* Paddle::getPosition() const {
+    return position;
+}
+
 void Paddle::move(const Position* position) {
     move(position->getX(), position->getY());
 }
@@ -17,6 +21,10 @@ void Paddle::move(const int x, const int y) {
     coord_y = (coord_y < 0) ? 0 : coord_y;
 
     position = new Position(coord_x, coord_y);
+}
+
+void Paddle::moveX(const int offset) {
+    move(position->getX() + offset, position->getY());
 }
 
 void Paddle::render() const {

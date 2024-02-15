@@ -28,6 +28,9 @@ int main(int argv, char **args) {
     auto *player = new Paddle(renderer);
     auto *opponent = new Opponent(renderer);
 
+    player->move(player_position);
+    opponent->move(opponent_position);
+
     int velocityX = 0;
 
     SDL_Event e;
@@ -39,14 +42,14 @@ int main(int argv, char **args) {
             if (e.type == SDL_KEYDOWN) {
                 switch (e.key.keysym.sym) {
                     case SDLK_a:
-                        std::cout << player_position->getX() << std::endl;
-                        player_position = new Position(player_position->getX() - 2, player_position->getY());
-                        opponent_position = new Position(opponent_position->getX() - 2, opponent_position->getY());
+                        std::cout << player->getPosition()->getX() << std::endl;
+                        player->moveX(-10);
+                        opponent->moveX(-10);
                         break;
                     case SDLK_e:
-                        std::cout << player_position->getX() << std::endl;
-                        player_position = new Position(player_position->getX() + 2, player_position->getY());
-                        opponent_position = new Position(opponent_position->getX() + 2, opponent_position->getY());
+                        std::cout << player->getPosition()->getX() << std::endl;
+                        player->moveX(10);
+                        opponent->moveX(10);
                         break;
 
                     case SDLK_h:
@@ -64,22 +67,7 @@ int main(int argv, char **args) {
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
 
-        // const Uint8* keyState = SDL_GetKeyboardState(nullptr);
-        // if (keyState[SDL_SCANCODE_A]) {
-        //     std::cout << player_position->getX() << std::endl;
-        //     player_position = new Position(player_position->getX() - 2, player_position->getY());
-        //     opponent_position = new Position(opponent_position->getX() - 2, opponent_position->getY());
-        // }
-        // if (keyState[SDL_SCANCODE_E]) {
-        //     std::cout << player_position->getX() << std::endl;
-        //     player_position = new Position(player_position->getX() + 2, player_position->getY());
-        //     opponent_position = new Position(opponent_position->getX() + 2, opponent_position->getY());
-        // }
-
-        player->move(player_position);
         player->render();
-
-        opponent->move(opponent_position);
         opponent->render();
 
         // Render ball
