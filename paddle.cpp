@@ -21,6 +21,16 @@ void Paddle::move(const int x, const int y) {
 
 void Paddle::render() const {
     const SDL_Rect paddle = { position.X, position.Y, width, height};
-    SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
+
+    const Uint8 red = (rgbaColour & 0xFF000000) >> 24;
+    const Uint8 green = (rgbaColour & 0x00FF0000) >> 16;
+    const Uint8 blue = (rgbaColour & 0x0000FF00) >> 8;
+    const Uint8 alpha = rgbaColour & 0x000000FF;
+
+    SDL_SetRenderDrawColor(renderer, red, green, blue, alpha);
     SDL_RenderFillRect(renderer, &paddle);
+}
+
+void Paddle::setColour(const Uint64 colour) {
+    rgbaColour = colour;
 }

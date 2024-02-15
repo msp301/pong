@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
+#include "opponent.h"
 #include "paddle.h"
 #include "screen.h"
 
@@ -53,9 +54,9 @@ int main(int argv, char **args) {
         player->render();
 
         // Render opponent
-        SDL_Rect opponent = {pos_x, height, width, height};
-        SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0xFF, 0xFF);
-        SDL_RenderFillRect(renderer, &opponent);
+        auto* opponent = new Opponent(renderer);
+        opponent->move(pos_x, height);
+        opponent->render();
 
         // Render ball
         constexpr int ballHeight = SCREEN_HEIGHT / 32;
