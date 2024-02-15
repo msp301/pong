@@ -23,46 +23,70 @@ int main(int argv, char **args) {
         return 1;
     }
 
-    int offset = 0;
+    const auto* player_position = new Position(SCREEN_WIDTH / 4, SCREEN_HEIGHT);
+    const auto* opponent_position = new Position(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 16);
+    auto *player = new Paddle(renderer);
+    auto *opponent = new Opponent(renderer);
+
+    int velocityX = 0;
 
     SDL_Event e;
     bool quit = false;
     while (quit == false) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) quit = true;
+
+            if (e.type == SDL_KEYDOWN) {
+                switch (e.key.keysym.sym) {
+                    case SDLK_a:
+                        std::cout << player_position->getX() << std::endl;
+                        player_position = new Position(player_position->getX() - 2, player_position->getY());
+                        opponent_position = new Position(opponent_position->getX() - 2, opponent_position->getY());
+                        break;
+                    case SDLK_e:
+                        std::cout << player_position->getX() << std::endl;
+                        player_position = new Position(player_position->getX() + 2, player_position->getY());
+                        opponent_position = new Position(opponent_position->getX() + 2, opponent_position->getY());
+                        break;
+
+                    case SDLK_h:
+                        velocityX += 10;
+                        break;
+                    case SDLK_n:
+                        velocityX -= 10;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
 
-        const Uint8* keyState = SDL_GetKeyboardState(nullptr);
-        if (keyState[SDL_SCANCODE_A]) {
-            offset -= 2;
-        }
-        if (keyState[SDL_SCANCODE_E]) {
-            offset += 2;
-        }
+        // const Uint8* keyState = SDL_GetKeyboardState(nullptr);
+        // if (keyState[SDL_SCANCODE_A]) {
+        //     std::cout << player_position->getX() << std::endl;
+        //     player_position = new Position(player_position->getX() - 2, player_position->getY());
+        //     opponent_position = new Position(opponent_position->getX() - 2, opponent_position->getY());
+        // }
+        // if (keyState[SDL_SCANCODE_E]) {
+        //     std::cout << player_position->getX() << std::endl;
+        //     player_position = new Position(player_position->getX() + 2, player_position->getY());
+        //     opponent_position = new Position(opponent_position->getX() + 2, opponent_position->getY());
+        // }
 
-        const int pos_x = (SCREEN_WIDTH + offset) / 4;
-        constexpr int pos_y = SCREEN_HEIGHT;
-
-        constexpr int height = SCREEN_HEIGHT / 16;
-        constexpr int width = SCREEN_WIDTH / 4;
-
-        auto* player = new Paddle(renderer);
-        player->move(pos_x, pos_y);
+        player->move(player_position);
         player->render();
 
-        // Render opponent
-        auto* opponent = new Opponent(renderer);
-        opponent->move(pos_x, height);
+        opponent->move(opponent_position);
         opponent->render();
 
         // Render ball
         constexpr int ballHeight = SCREEN_HEIGHT / 32;
         constexpr int ballWidth = SCREEN_WIDTH / 32;
 
-        SDL_Rect ball = {SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, ballWidth, ballHeight};
+        SDL_Rect ball = {(SCREEN_WIDTH / 2) + velocityX, SCREEN_HEIGHT / 2, ballWidth, ballHeight};
         SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, 0xFF);
         SDL_RenderFillRect(renderer, &ball);
 

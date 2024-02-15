@@ -14,14 +14,14 @@ Uint64 rgbaColour = 0xFF0000FF;
 public:
     explicit Paddle(SDL_Renderer* renderer);
 
-    void move(Position position);
+    void move(const Position* position);
     void move(int x, int y);
 
     void render() const;
 protected:
     void setColour(Uint64 colour);
 private:
-    Position position{};
+    Position* position;
     SDL_Renderer* renderer;
 };
 

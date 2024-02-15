@@ -2,25 +2,25 @@
 
 Paddle::Paddle(SDL_Renderer *renderer) {
     this->renderer = renderer;
-    position = Position{0, 0};
+    position = new Position(0, 0);
 }
 
-void Paddle::move(const Position position) {
-    move(position.X, position.Y);
+void Paddle::move(const Position* position) {
+    move(position->getX(), position->getY());
 }
 
 void Paddle::move(const int x, const int y) {
     int coord_x = (x + width > SCREEN_WIDTH) ? SCREEN_WIDTH - width : x;
-    coord_x = (x - width < 0) ? 0 : coord_x;
+    coord_x = (coord_x < 0) ? 0 : coord_x;
 
     int coord_y = (y + height > SCREEN_HEIGHT) ? SCREEN_HEIGHT - height : y;
-    coord_y = (y - height < 0) ? 0 : coord_y;
+    coord_y = (coord_y < 0) ? 0 : coord_y;
 
-    position = Position{coord_x, coord_y};
+    position = new Position(coord_x, coord_y);
 }
 
 void Paddle::render() const {
-    const SDL_Rect paddle = { position.X, position.Y, width, height};
+    const SDL_Rect paddle = { position->getX(), position->getY(), width, height};
 
     const Uint8 red = (rgbaColour & 0xFF000000) >> 24;
     const Uint8 green = (rgbaColour & 0x00FF0000) >> 16;
