@@ -13,5 +13,7 @@ add_executable(pong main.cpp
         screen.h
         opponent.cpp
         opponent.h
-        position.cpp)
+        position.cpp
+        ball.cpp
+        ball.h)
 target_link_libraries(pong ${SDL2_LIBRARIES})

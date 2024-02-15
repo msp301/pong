@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
+#include "ball.h"
 #include "opponent.h"
 #include "paddle.h"
 #include "screen.h"
@@ -27,11 +28,10 @@ int main(int argv, char **args) {
     const auto* opponent_position = new Position(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 16);
     auto *player = new Paddle(renderer);
     auto *opponent = new Opponent(renderer);
+    auto *ball = new Ball(renderer);
 
     player->move(player_position);
     opponent->move(opponent_position);
-
-    int velocityX = 0;
 
     SDL_Event e;
     bool quit = false;
@@ -51,13 +51,6 @@ int main(int argv, char **args) {
                         player->moveX(10);
                         opponent->moveX(10);
                         break;
-
-                    case SDLK_h:
-                        velocityX += 10;
-                        break;
-                    case SDLK_n:
-                        velocityX -= 10;
-                        break;
                     default:
                         break;
                 }
@@ -70,13 +63,8 @@ int main(int argv, char **args) {
         player->render();
         opponent->render();
 
-        // Render ball
-        constexpr int ballHeight = SCREEN_HEIGHT / 32;
-        constexpr int ballWidth = SCREEN_WIDTH / 32;
-
-        SDL_Rect ball = {(SCREEN_WIDTH / 2) + velocityX, SCREEN_HEIGHT / 2, ballWidth, ballHeight};
-        SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, 0xFF);
-        SDL_RenderFillRect(renderer, &ball);
+        ball->move();
+        ball->render();
 
         SDL_RenderPresent(renderer);
     }
