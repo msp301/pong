@@ -7,8 +7,8 @@ include_directories(${SDL2_INCLUDE_DIRS})
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(pong main.cpp
-        Paddle.cpp
-        Paddle.h
-        Position.h
+        paddle.cpp
+        paddle.h
+        position.h
         screen.h)
 target_link_libraries(pong ${SDL2_LIBRARIES})

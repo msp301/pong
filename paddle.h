@@ -3,7 +3,7 @@
 
 #include <SDL_render.h>
 
-#include "Position.h"
+#include "position.h"
 #include "screen.h"
 
 class Paddle {

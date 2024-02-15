@@ -1,4 +1,4 @@
-#include "Paddle.h"
+#include "paddle.h"
 
 Paddle::Paddle(SDL_Renderer *renderer) {
     this->renderer = renderer;
