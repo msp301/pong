@@ -24,6 +24,8 @@ int main(int argv, char **args) {
         return 1;
     }
 
+    int frames = 0;
+
     const auto* player_position = new Position(SCREEN_WIDTH / 4, SCREEN_HEIGHT);
     const auto* opponent_position = new Position(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 16);
     auto *player = new Paddle(renderer);
@@ -57,6 +59,10 @@ int main(int argv, char **args) {
             }
         }
 
+        float avgFPS = frames / (SDL_GetTicks() / 1000.f);
+        if (avgFPS > 2000000) avgFPS = 0;
+        std::cout << "Average Frames Per Second " << avgFPS << std::endl;
+
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
 
@@ -67,6 +73,7 @@ int main(int argv, char **args) {
         ball->render();
 
         SDL_RenderPresent(renderer);
+        frames++;
     }
 
     SDL_DestroyWindow(window);
