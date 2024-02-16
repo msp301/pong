@@ -6,6 +6,9 @@
 #include "paddle.h"
 #include "screen.h"
 
+constexpr int FPS = 60;
+constexpr int TICKS_PER_FRAME = 1000 / FPS;
+
 int main(int argv, char **args) {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
@@ -38,6 +41,8 @@ int main(int argv, char **args) {
     SDL_Event e;
     bool quit = false;
     while (quit == false) {
+        Uint32 startTicks = SDL_GetTicks();
+
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) quit = true;
 
@@ -74,6 +79,10 @@ int main(int argv, char **args) {
 
         SDL_RenderPresent(renderer);
         frames++;
+
+        if (const Uint32 endTicks = SDL_GetTicks(); endTicks - startTicks < TICKS_PER_FRAME) {
+            SDL_Delay(TICKS_PER_FRAME - (endTicks - startTicks));
+        }
     }
 
     SDL_DestroyWindow(window);
