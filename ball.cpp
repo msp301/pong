@@ -2,22 +2,20 @@
 
 #include <SDL_render.h>
 
-Ball::Ball(SDL_Renderer* renderer) {
+Ball::Ball(SDL_Renderer *renderer) {
     this->renderer = renderer;
     position = new Position(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 }
 
 void Ball::move() {
-    int x = position->getX() + velocity;
+    int x = position->getX();
     int y = position->getY();
 
-    if ((x < 0) || (x + width > SCREEN_WIDTH)) {
-        x -= velocity;
-    }
+    if (x <= 0)                   velocityX = velocity;
+    if (x + width > SCREEN_WIDTH) velocityX = -velocity;
 
-    if ((y < 0) || (y + height > SCREEN_HEIGHT)) {
-        y -= velocity;
-    }
+    if (y <= 0)                     velocityY = velocity;
+    if (y + height > SCREEN_HEIGHT) velocityY = -velocity;
 
     position = new Position(x + velocityX, y + velocityY);
 }

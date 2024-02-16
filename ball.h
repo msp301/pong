@@ -20,8 +20,8 @@ private:
 
     Position* position;
     SDL_Renderer* renderer;
-    int velocityX = 0;
-    int velocityY = 0;
+    int velocityX = velocity;
+    int velocityY = velocity;
 };
 
 #endif //BALL_H
