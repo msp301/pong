@@ -24,6 +24,7 @@ private:
     static constexpr int velocity = 10;
 
     Position* position;
+    Position* previousPosition = nullptr;
     SDL_Renderer* renderer;
     int velocityX = velocity;
     int velocityY = velocity;

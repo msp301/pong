@@ -16,14 +16,23 @@ void Ball::move(const std::vector<CollisionBox*>& colliders) {
     int x = position->X;
     int y = position->Y;
 
-    if (x <= 0)                                                                 velocityX = velocity;
-    if (x + width > SCREEN_WIDTH || isColliding(this->collisionBox, colliders)) velocityX = -velocity;
+    if (x <= 0)                   velocityX = velocity;
+    if (x + width > SCREEN_WIDTH) velocityX = -velocity;
+    if (isColliding(this->collisionBox, colliders)) {
+        if (previousPosition && previousPosition->X > position->X) velocityX = velocity;
+        if (previousPosition && previousPosition->X < position->X) velocityX = -velocity;
+    }
 
-    if (y <= 0)                                                                   velocityY = velocity;
-    if (y + height > SCREEN_HEIGHT || isColliding(this->collisionBox, colliders)) velocityY = -velocity;
+    if (y <= 0)                     velocityY = velocity;
+    if (y + height > SCREEN_HEIGHT) velocityY = -velocity;
+    if (isColliding(this->collisionBox, colliders)) {
+        if (previousPosition && previousPosition->Y > position->Y) velocityY = velocity;
+        if (previousPosition && previousPosition->Y < position->Y) velocityY = -velocity;
+    }
 
     box = new SDL_Rect {x + velocityX, y + velocityY, width, height};
     position->set(x + velocityX, y + velocityY);
+    previousPosition = new Position(x, y);
 }
 
 void Ball::render() const {
