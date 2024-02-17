@@ -49,12 +49,12 @@ int main(int argv, char **args) {
             if (e.type == SDL_KEYDOWN) {
                 switch (e.key.keysym.sym) {
                     case SDLK_a:
-                        std::cout << player->getPosition()->getX() << std::endl;
+                        std::cout << player->getPosition()->X << std::endl;
                     player->moveX(-10);
                     opponent->moveX(-10);
                     break;
                     case SDLK_e:
-                        std::cout << player->getPosition()->getX() << std::endl;
+                        std::cout << player->getPosition()->X << std::endl;
                     player->moveX(10);
                     opponent->moveX(10);
                     break;
@@ -74,8 +74,8 @@ int main(int argv, char **args) {
         player->render();
         opponent->render();
 
-        std::vector<Collider*> colliders { player, opponent };
-        ball->move(colliders);
+        std::vector<CollisionBox*> collisionBoxes { player->collisionBox, opponent->collisionBox };
+        ball->move(collisionBoxes);
         ball->render();
 
         SDL_RenderPresent(renderer);

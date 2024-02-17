@@ -1,13 +1,11 @@
 #ifndef POSITION_H
 #define POSITION_H
 
-class Position {
-public:
-    Position(int x, int y);
-    [[nodiscard]] int getX() const;
-    [[nodiscard]] int getY() const;
+struct Position {
+    Position(const int x, const int y) : X(x), Y(y) {};
 
-private:
+    void set(const int x, const int y) { X = x; Y = y; }
+
     int X;
     int Y;
 };

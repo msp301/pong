@@ -4,10 +4,11 @@
 #include <SDL_render.h>
 
 #include "collider.h"
+#include "collision_box.h"
 #include "position.h"
 #include "screen.h"
 
-class Paddle : public Collider {
+class Paddle {
 static constexpr int height = SCREEN_HEIGHT / 16;
 static constexpr int width = SCREEN_WIDTH / 4;
 Uint64 rgbaColour = 0xFF0000FF;
@@ -15,7 +16,9 @@ Uint64 rgbaColour = 0xFF0000FF;
 public:
     explicit Paddle(SDL_Renderer* renderer);
 
-    [[nodiscard]] SDL_Rect* getCollisionBox() const override;
+    SDL_Rect* box;
+    CollisionBox* collisionBox;
+
     [[nodiscard]] Position* getPosition() const;
 
     void move(const Position* position);

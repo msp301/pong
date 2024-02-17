@@ -3,11 +3,8 @@
 Paddle::Paddle(SDL_Renderer *renderer) {
     this->renderer = renderer;
     position = new Position(0, 0);
-}
-
-SDL_Rect* Paddle::getCollisionBox() const {
-    SDL_Rect paddle = { position->getX(), position->getY(), width, height};
-    return &paddle;
+    box = new SDL_Rect {position->X, position->Y, width, height};
+    collisionBox = new CollisionBox(width, height, position);
 }
 
 Position* Paddle::getPosition() const {
@@ -15,7 +12,7 @@ Position* Paddle::getPosition() const {
 }
 
 void Paddle::move(const Position* position) {
-    move(position->getX(), position->getY());
+    move(position->X, position->Y);
 }
 
 void Paddle::move(const int x, const int y) {
@@ -25,11 +22,12 @@ void Paddle::move(const int x, const int y) {
     int coord_y = (y + height > SCREEN_HEIGHT) ? SCREEN_HEIGHT - height : y;
     coord_y = (coord_y < 0) ? 0 : coord_y;
 
-    position = new Position(coord_x, coord_y);
+    box = new SDL_Rect {coord_x, coord_y, width, height};
+    position->set(coord_x, coord_y);
 }
 
 void Paddle::moveX(const int offset) {
-    move(position->getX() + offset, position->getY());
+    move(position->X + offset, position->Y);
 }
 
 void Paddle::render() const {
@@ -39,7 +37,7 @@ void Paddle::render() const {
     const Uint8 alpha = rgbaColour & 0x000000FF;
 
     SDL_SetRenderDrawColor(renderer, red, green, blue, alpha);
-    SDL_RenderFillRect(renderer, getCollisionBox());
+    SDL_RenderFillRect(renderer, box);
 }
 
 void Paddle::setColour(const Uint64 colour) {

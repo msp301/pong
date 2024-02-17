@@ -3,30 +3,30 @@
 #include <SDL_render.h>
 #include <vector>
 
+#include "collision_system.h"
+
 Ball::Ball(SDL_Renderer *renderer) {
     this->renderer = renderer;
     position = new Position(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+    box = new SDL_Rect {position->X, position->Y, width, height};
+    collisionBox = new CollisionBox(width, height, position);
 }
 
-void Ball::move(std::vector<Collider*>& colliders) {
-    int x = position->getX();
-    int y = position->getY();
+void Ball::move(const std::vector<CollisionBox*>& colliders) {
+    int x = position->X;
+    int y = position->Y;
 
-    if (x <= 0)                                             velocityX = velocity;
-    if (x + width > SCREEN_WIDTH || isColliding(colliders)) velocityX = -velocity;
+    if (x <= 0)                                                                 velocityX = velocity;
+    if (x + width > SCREEN_WIDTH || isColliding(this->collisionBox, colliders)) velocityX = -velocity;
 
-    if (y <= 0)                     velocityY = velocity;
-    if (y + height > SCREEN_HEIGHT) velocityY = -velocity;
+    if (y <= 0)                                                                   velocityY = velocity;
+    if (y + height > SCREEN_HEIGHT || isColliding(this->collisionBox, colliders)) velocityY = -velocity;
 
-    position = new Position(x + velocityX, y + velocityY);
+    box = new SDL_Rect {x + velocityX, y + velocityY, width, height};
+    position->set(x + velocityX, y + velocityY);
 }
 
 void Ball::render() const {
     SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, 0xFF);
-    SDL_RenderFillRect(renderer, getCollisionBox());
-}
-
-SDL_Rect* Ball::getCollisionBox() const {
-    SDL_Rect ball = {position->getX(), position->getY(), width, height};
-    return &ball;
+    SDL_RenderFillRect(renderer, box);
 }
