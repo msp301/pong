@@ -3,15 +3,18 @@
 
 #include <SDL_render.h>
 
+#include "collider.h"
 #include "position.h"
 #include "screen.h"
 
-class Ball {
+class Ball final : public Collider {
 public:
     explicit Ball(SDL_Renderer* renderer);
 
-    void move();
+    void move(std::vector<Collider*>& colliders);
     void render() const;
+
+    [[nodiscard]] SDL_Rect* getCollisionBox() const override;
 
 private:
     static constexpr int height = SCREEN_HEIGHT / 32;

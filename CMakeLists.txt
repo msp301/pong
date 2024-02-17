@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.27.8)
 project(pong)
 
 find_package(SDL2 REQUIRED)
@@ -15,5 +15,6 @@ add_executable(pong main.cpp
         opponent.h
         position.cpp
         ball.cpp
-        ball.h)
+        ball.h
+        collider.h)
 target_link_libraries(pong ${SDL2_LIBRARIES})

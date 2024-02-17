@@ -50,14 +50,14 @@ int main(int argv, char **args) {
                 switch (e.key.keysym.sym) {
                     case SDLK_a:
                         std::cout << player->getPosition()->getX() << std::endl;
-                        player->moveX(-10);
-                        opponent->moveX(-10);
-                        break;
+                    player->moveX(-10);
+                    opponent->moveX(-10);
+                    break;
                     case SDLK_e:
                         std::cout << player->getPosition()->getX() << std::endl;
-                        player->moveX(10);
-                        opponent->moveX(10);
-                        break;
+                    player->moveX(10);
+                    opponent->moveX(10);
+                    break;
                     default:
                         break;
                 }
@@ -74,7 +74,8 @@ int main(int argv, char **args) {
         player->render();
         opponent->render();
 
-        ball->move();
+        std::vector<Collider*> colliders { player, opponent };
+        ball->move(colliders);
         ball->render();
 
         SDL_RenderPresent(renderer);

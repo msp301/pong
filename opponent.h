@@ -2,7 +2,7 @@
 #define OPPONENT_H
 #include "paddle.h"
 
-class Opponent : public Paddle {
+class Opponent final : public Paddle {
 public:
     explicit Opponent(SDL_Renderer *renderer) : Paddle(renderer) {
         setColour(0x0000FFFF);
