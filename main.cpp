@@ -29,8 +29,8 @@ int main(int argv, char **args) {
 
     int frames = 0;
 
-    const auto* player_position = new Position(SCREEN_WIDTH / 4, SCREEN_HEIGHT);
-    const auto* opponent_position = new Position(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 16);
+    const auto *player_position = new Position(SCREEN_WIDTH / 4, SCREEN_HEIGHT);
+    const auto *opponent_position = new Position(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 16);
     auto *player = new Paddle(renderer);
     auto *opponent = new Opponent(renderer);
     auto *ball = new Ball(renderer);
@@ -50,14 +50,14 @@ int main(int argv, char **args) {
                 switch (e.key.keysym.sym) {
                     case SDLK_a:
                         std::cout << player->getPosition()->X << std::endl;
-                    player->moveX(-10);
-                    opponent->moveX(-10);
-                    break;
+                        player->moveX(-10);
+                        opponent->moveX(-10);
+                        break;
                     case SDLK_e:
                         std::cout << player->getPosition()->X << std::endl;
-                    player->moveX(10);
-                    opponent->moveX(10);
-                    break;
+                        player->moveX(10);
+                        opponent->moveX(10);
+                        break;
                     default:
                         break;
                 }
@@ -74,7 +74,7 @@ int main(int argv, char **args) {
         player->render();
         opponent->render();
 
-        std::vector<CollisionBox*> collisionBoxes { player->collisionBox, opponent->collisionBox };
+        std::vector collisionBoxes{player->collisionBox, opponent->collisionBox};
         ball->move(collisionBoxes);
         ball->render();
 
