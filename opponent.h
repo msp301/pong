@@ -8,7 +8,7 @@ public:
         setColour(0x0000FFFF);
     }
 
-    void performMove(int offset, const Position* ballPosition, Position* previousBallPosition);
+    void performMove(int offset, const Position* ballPosition, const Position* previousBallPosition);
 protected:
     static constexpr Uint64 rgbaColour = 0x0000FFFF;
 };
