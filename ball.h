@@ -18,13 +18,13 @@ public:
     void move(const std::vector<CollisionBox*> &colliders);
     void render() const;
 
+    Position* position;
+    Position* previousPosition = nullptr;
 private:
     static constexpr int height = SCREEN_HEIGHT / 32;
     static constexpr int width = SCREEN_WIDTH / 32;
     static constexpr int velocity = 10;
 
-    Position* position;
-    Position* previousPosition = nullptr;
     SDL_Renderer* renderer;
     int velocityX = velocity;
     int velocityY = velocity;

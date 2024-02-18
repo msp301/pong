@@ -7,6 +7,8 @@ public:
     explicit Opponent(SDL_Renderer *renderer) : Paddle(renderer) {
         setColour(0x0000FFFF);
     }
+
+    void performMove(int offset, const Position* ballPosition, Position* previousBallPosition);
 protected:
     static constexpr Uint64 rgbaColour = 0x0000FFFF;
 };

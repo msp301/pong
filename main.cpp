@@ -51,12 +51,10 @@ int main(int argv, char **args) {
                     case SDLK_a:
                         std::cout << player->getPosition()->X << std::endl;
                         player->moveX(-10);
-                        opponent->moveX(-10);
                         break;
                     case SDLK_e:
                         std::cout << player->getPosition()->X << std::endl;
                         player->moveX(10);
-                        opponent->moveX(10);
                         break;
                     default:
                         break;
@@ -72,6 +70,8 @@ int main(int argv, char **args) {
         SDL_RenderClear(renderer);
 
         player->render();
+
+        opponent->performMove(10, ball->position, ball->previousPosition);
         opponent->render();
 
         std::vector collisionBoxes{player->collisionBox, opponent->collisionBox};

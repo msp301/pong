@@ -9,8 +9,6 @@
 #include "screen.h"
 
 class Paddle {
-static constexpr int height = SCREEN_HEIGHT / 16;
-static constexpr int width = SCREEN_WIDTH / 4;
 Uint64 rgbaColour = 0xFF0000FF;
 
 public:
@@ -28,8 +26,11 @@ public:
     void render() const;
 protected:
     void setColour(Uint64 colour);
-private:
+
+    static constexpr int height = SCREEN_HEIGHT / 16;
+    static constexpr int width = SCREEN_WIDTH / 4;
     Position* position;
+private:
     SDL_Renderer* renderer;
 };
 
