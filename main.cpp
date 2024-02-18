@@ -80,7 +80,8 @@ int main(int argv, char **args) {
         SDL_RenderPresent(renderer);
         frames++;
 
-        updateScore(ball->position, {player, opponent});
+        updateScore(ball, player, opponent);
+        ball->resetCollisions();
 
         if (const Uint32 endTicks = SDL_GetTicks(); endTicks - startTicks < TICKS_PER_FRAME) {
             SDL_Delay(TICKS_PER_FRAME - (endTicks - startTicks));

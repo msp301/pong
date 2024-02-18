@@ -1,6 +1,7 @@
 #include "opponent.h"
 
 void Opponent::performMove(const int offset, const Position* ballPosition, const Position* previousBallPosition) {
+    return;
     if (previousBallPosition == nullptr) return;
     if (ballPosition->Y > previousBallPosition->Y) return;
 

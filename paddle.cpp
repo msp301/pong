@@ -43,3 +43,11 @@ void Paddle::render() const {
 void Paddle::setColour(const Uint64 colour) {
     rgbaColour = colour;
 }
+
+void Paddle::setName(const std::string &name) {
+    this->name = name;
+}
+
+void Paddle::setDefendingBoundary(const int boundary) {
+    defendingBoundary = boundary;
+}

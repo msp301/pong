@@ -14,9 +14,12 @@ public:
 
     SDL_Rect* box;
     CollisionBox* collisionBox;
+    int boundaryYCollision = -1;
 
     void move(const std::vector<CollisionBox*> &colliders);
     void render() const;
+
+    void resetCollisions();
 
     Position* position;
     Position* previousPosition = nullptr;
