@@ -2,6 +2,7 @@
 #define PADDLE_H
 
 #include <SDL_render.h>
+#include <string>
 
 #include "collider.h"
 #include "collision_box.h"
@@ -16,6 +17,10 @@ public:
 
     SDL_Rect* box;
     CollisionBox* collisionBox;
+
+    std::string name = "Player";
+    int gameScore = 0;
+    int defendingBoundary = SCREEN_HEIGHT;
 
     [[nodiscard]] Position* getPosition() const;
 

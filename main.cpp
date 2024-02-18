@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 
 #include "ball.h"
+#include "game_system.h"
 #include "opponent.h"
 #include "paddle.h"
 #include "screen.h"
@@ -49,11 +50,9 @@ int main(int argv, char **args) {
             if (e.type == SDL_KEYDOWN) {
                 switch (e.key.keysym.sym) {
                     case SDLK_a:
-                        std::cout << player->getPosition()->X << std::endl;
                         player->moveX(-10);
                         break;
                     case SDLK_e:
-                        std::cout << player->getPosition()->X << std::endl;
                         player->moveX(10);
                         break;
                     default:
@@ -64,7 +63,7 @@ int main(int argv, char **args) {
 
         float avgFPS = frames / (SDL_GetTicks() / 1000.f);
         if (avgFPS > 2000000) avgFPS = 0;
-        std::cout << "Average Frames Per Second " << avgFPS << std::endl;
+        // std::cout << "Average Frames Per Second " << avgFPS << std::endl;
 
         SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
         SDL_RenderClear(renderer);
@@ -80,6 +79,8 @@ int main(int argv, char **args) {
 
         SDL_RenderPresent(renderer);
         frames++;
+
+        updateScore(ball->position, {player, opponent});
 
         if (const Uint32 endTicks = SDL_GetTicks(); endTicks - startTicks < TICKS_PER_FRAME) {
             SDL_Delay(TICKS_PER_FRAME - (endTicks - startTicks));

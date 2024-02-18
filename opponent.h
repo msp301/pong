@@ -8,6 +8,9 @@ public:
         setColour(0x0000FFFF);
     }
 
+    std::string name = "Opponent";
+    int defendingBoundary = 0;
+
     void performMove(int offset, const Position* ballPosition, const Position* previousBallPosition);
 protected:
     static constexpr Uint64 rgbaColour = 0x0000FFFF;
