@@ -46,20 +46,11 @@ int main(int argv, char **args) {
 
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) quit = true;
-
-            if (e.type == SDL_KEYDOWN) {
-                switch (e.key.keysym.sym) {
-                    case SDLK_a:
-                        player->moveX(-10);
-                        break;
-                    case SDLK_e:
-                        player->moveX(10);
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
+
+        const Uint8* keyState = SDL_GetKeyboardState(nullptr);
+        if (keyState[SDL_SCANCODE_A]) player->moveX(-10);
+        if (keyState[SDL_SCANCODE_D]) player->moveX(10);
 
         float avgFPS = frames / (SDL_GetTicks() / 1000.f);
         if (avgFPS > 2000000) avgFPS = 0;
