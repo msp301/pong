@@ -16,6 +16,9 @@ int main(int argv, char **args) {
         return 1;
     }
 
+    const SDL_Scancode leftScanCode = SDL_GetScancodeFromKey(SDLK_a);
+    const SDL_Scancode rightScanCode = SDL_GetScancodeFromKey(SDLK_e);
+
     SDL_Window *window = SDL_CreateWindow("Pong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (window == nullptr) {
         std::cout << "Failed to create window! SDL_Error: " << SDL_GetError() << std::endl;
@@ -49,8 +52,8 @@ int main(int argv, char **args) {
         }
 
         const Uint8* keyState = SDL_GetKeyboardState(nullptr);
-        if (keyState[SDL_SCANCODE_A]) player->moveX(-10);
-        if (keyState[SDL_SCANCODE_D]) player->moveX(10);
+        if (keyState[leftScanCode]) player->moveX(-10);
+        if (keyState[rightScanCode]) player->moveX(10);
 
         float avgFPS = frames / (SDL_GetTicks() / 1000.f);
         if (avgFPS > 2000000) avgFPS = 0;
