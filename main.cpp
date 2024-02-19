@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 
 #include "ball.h"
+#include "controller.h"
 #include "game_system.h"
 #include "opponent.h"
 #include "paddle.h"
@@ -11,13 +12,15 @@ constexpr int FPS = 60;
 constexpr int TICKS_PER_FRAME = 1000 / FPS;
 
 int main(int argv, char **args) {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    const SDL_Scancode leftScanCode = SDL_GetScancodeFromKey(SDLK_a);
+    const SDL_Scancode rightScanCode = SDL_GetScancodeFromKey(SDLK_e);
+
+    SDL_GameController* controller = nullptr;
+
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0) {
         std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
         return 1;
     }
-
-    const SDL_Scancode leftScanCode = SDL_GetScancodeFromKey(SDLK_a);
-    const SDL_Scancode rightScanCode = SDL_GetScancodeFromKey(SDLK_e);
 
     SDL_Window *window = SDL_CreateWindow("Pong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (window == nullptr) {
@@ -48,7 +51,45 @@ int main(int argv, char **args) {
         const Uint32 startTicks = SDL_GetTicks();
 
         while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_QUIT) quit = true;
+            switch (e.type) {
+                case SDL_QUIT:
+                    quit = true;
+                    break;
+                case SDL_JOYAXISMOTION:
+                    if (controller && e.jaxis.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controller))) {
+                        constexpr int JOYSTICK_DEAD_ZONE = 8000;
+                        if (e.jaxis.value < -JOYSTICK_DEAD_ZONE) {
+                            player->moveX(-5);
+                        } else if (e.jaxis.value > JOYSTICK_DEAD_ZONE) {
+                            player->moveX(5);
+                        }
+                    }
+                    break;
+                case SDL_CONTROLLERDEVICEADDED:
+                    if (!controller) {
+                        controller = SDL_GameControllerOpen(e.cdevice.which);
+                        std::cout << "Controller added: " << SDL_GameControllerName(controller) << std::endl;
+                    }
+                    break;
+                case SDL_CONTROLLERDEVICEREMOVED:
+                    if (controller && e.cdevice.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controller))) {
+                        const char* controllerName = SDL_GameControllerName(controller);
+                        destroyController(controller);
+                        controller = nullptr;
+                        std::cout << "Controller removed: " << controllerName << std::endl;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (controller) {
+            if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_LEFT)) {
+                player->moveX(-10);
+            } else if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_DPAD_RIGHT)) {
+                player->moveX(10);
+            }
         }
 
         const Uint8* keyState = SDL_GetKeyboardState(nullptr);
@@ -81,6 +122,8 @@ int main(int argv, char **args) {
             SDL_Delay(TICKS_PER_FRAME - (endTicks - startTicks));
         }
     }
+
+    destroyController(controller);
 
     SDL_DestroyWindow(window);
     SDL_Quit();

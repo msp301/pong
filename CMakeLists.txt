@@ -22,5 +22,6 @@ add_executable(pong main.cpp
         collision_system.h
         position.cpp
         game_system.h
-        game_system.cpp)
+        game_system.cpp
+        controller.h)
 target_link_libraries(pong ${SDL2_LIBRARIES})
