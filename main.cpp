@@ -45,7 +45,7 @@ int main(int argv, char **args) {
     SDL_Event e;
     bool quit = false;
     while (quit == false) {
-        Uint32 startTicks = SDL_GetTicks();
+        const Uint32 startTicks = SDL_GetTicks();
 
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT) quit = true;
