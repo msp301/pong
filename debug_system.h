@@ -5,9 +5,12 @@
 #include "paddle.h"
 
 class DebugSystem {
+public:
     DebugSystem(Ball* ball, Paddle* player, Paddle* opponent);
 
-    void printInfo();
+    void toggle();
+
+    void printInfo() const;
 
 private:
     bool enabled = false;

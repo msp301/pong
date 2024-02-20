@@ -3,6 +3,7 @@
 
 #include "ball.h"
 #include "controller.h"
+#include "debug_system.h"
 #include "game_system.h"
 #include "opponent.h"
 #include "paddle.h"
@@ -42,18 +43,27 @@ int main(int argv, char **args) {
     auto *opponent = new Opponent(renderer);
     auto *ball = new Ball(renderer);
 
+    auto* debugSystem = new DebugSystem(ball, player, opponent);
+
     player->move(player_position);
     opponent->move(opponent_position);
 
     SDL_Event e;
     bool quit = false;
     while (quit == false) {
+        debugSystem->printInfo();
+
         const Uint32 startTicks = SDL_GetTicks();
 
         while (SDL_PollEvent(&e)) {
             switch (e.type) {
                 case SDL_QUIT:
                     quit = true;
+                    break;
+                case SDL_KEYDOWN:
+                    if (e.key.keysym.sym == SDLK_ESCAPE) {
+                        debugSystem->toggle();
+                    }
                     break;
                 case SDL_JOYAXISMOTION:
                     if (controller && e.jaxis.which == SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controller))) {

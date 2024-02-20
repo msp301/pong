@@ -31,12 +31,10 @@ public:
     void render() const;
 protected:
     void setColour(Uint64 colour);
+    void setName(const std::string &name);
+    void setDefendingBoundary(int boundary);
 
-void setName(const std::string &name);
-
-void setDefendingBoundary(int boundary);
-
-static constexpr int height = SCREEN_HEIGHT / 16;
+    static constexpr int height = SCREEN_HEIGHT / 16;
     static constexpr int width = SCREEN_WIDTH / 4;
     Position* position;
 private:
