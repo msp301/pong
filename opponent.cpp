@@ -6,6 +6,11 @@ void Opponent::performMove(const int offset, const Position* ballPosition, const
     if (previousBallPosition == nullptr) return;
     if (ballPosition->Y > previousBallPosition->Y) return;
 
+    if (ballPosition->Y <= position->Y) {
+        if (position->X + width >= SCREEN_WIDTH / 2) return moveX(-offset);
+        if (position->X - width <= SCREEN_WIDTH / 2) return moveX(offset);
+    }
+
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> distrib(1, offset);
