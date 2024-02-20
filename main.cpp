@@ -12,15 +12,15 @@ constexpr int FPS = 60;
 constexpr int TICKS_PER_FRAME = 1000 / FPS;
 
 int main(int argv, char **args) {
-    const SDL_Scancode leftScanCode = SDL_GetScancodeFromKey(SDLK_a);
-    const SDL_Scancode rightScanCode = SDL_GetScancodeFromKey(SDLK_e);
-
-    SDL_GameController* controller = nullptr;
-
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0) {
         std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
         return 1;
     }
+
+    const SDL_Scancode leftScanCode = SDL_GetScancodeFromKey(SDLK_a);
+    const SDL_Scancode rightScanCode = SDL_GetScancodeFromKey(SDLK_e);
+
+    SDL_GameController* controller = nullptr;
 
     SDL_Window *window = SDL_CreateWindow("Pong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
     if (window == nullptr) {
