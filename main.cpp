@@ -8,11 +8,16 @@
 #include "opponent.h"
 #include "paddle.h"
 #include "screen.h"
+#include "entity.h"
 
 constexpr int FPS = 60;
 constexpr int TICKS_PER_FRAME = 1000 / FPS;
 
 int main(int argv, char **args) {
+    auto* entity = new Entity();
+
+    std::cout << entity->id() << std::endl;
+
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0) {
         std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
         return 1;

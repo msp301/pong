@@ -25,5 +25,7 @@ add_executable(pong main.cpp
         game_system.cpp
         controller.h
         debug_system.cpp
-        debug_system.h)
+        debug_system.h
+        entity.cpp
+        entity.h)
 target_link_libraries(pong ${SDL2_LIBRARIES})
