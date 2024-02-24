@@ -1,5 +1,6 @@
 #ifndef COLLISIONBOX_H
 #define COLLISIONBOX_H
+#include "entity.h"
 #include "position.h"
 
 class CollisionBox {

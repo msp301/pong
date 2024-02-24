@@ -9,14 +9,25 @@
 #include "paddle.h"
 #include "screen.h"
 #include "entity.h"
+#include "registry.h"
 
 constexpr int FPS = 60;
 constexpr int TICKS_PER_FRAME = 1000 / FPS;
 
 int main(int argv, char **args) {
     auto* entity = new Entity();
+    entity->set(new Position(0, 0));
 
-    std::cout << entity->id() << std::endl;
+    auto* val = getEntityComponent<Position>(entity->id());
+    auto* pos = entity->get<Position>();
+    std::cout << entity->id() << pos->toString() << std::endl;
+
+    // registerCompoment(entity);
+    // for (const auto& [key, values]: registry<Entity>) {
+    //     for (const auto& value: values) {
+    //         std::cout << key << " " << value->id() << std::endl;
+    //     }
+    // }
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER) < 0) {
         std::cout << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
