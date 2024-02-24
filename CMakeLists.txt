@@ -27,6 +27,5 @@ add_executable(pong main.cpp
         debug_system.cpp
         debug_system.h
         entity.cpp
-        entity.h
-        registry.h)
+        entity.h)
 target_link_libraries(pong ${SDL2_LIBRARIES})
