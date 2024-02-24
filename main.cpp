@@ -16,15 +16,10 @@ constexpr int TICKS_PER_FRAME = 1000 / FPS;
 
 int main(int argv, char **args) {
     auto* entity = new Entity();
-    auto* bar = new Position(0, 0);
-    entity->set(bar);
+    entity->set(new Position(0, 0));
 
-    auto* foo = new Position(1, 2);
-    data<Position>["foo"] = foo;
-
-    registerComponent(foo);
-    auto val = getEntityComponent<Position>(entity->id());
-    auto pos = entity->get<Position>();
+    auto* val = getEntityComponent<Position>(entity->id());
+    auto* pos = entity->get<Position>();
     std::cout << entity->id() << pos->toString() << std::endl;
 
     // registerCompoment(entity);

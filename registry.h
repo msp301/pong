@@ -7,17 +7,13 @@
 #include <vector>
 
 template<typename T>
-static std::map<const char*, T*> data {};
+std::map<std::string, std::vector<T*>> componentsRegistry = {};
 
 template<typename T>
-static std::map<const char*, std::vector<T*>> componentsRegistry {};
+std::map<int, std::map<std::string, T*>> entitiesRegistry;
 
 template<typename T>
-static std::map<int, std::map<const char*, T*>> entitiesRegistry {};
-
-template<typename T>
-void registerComponent(T *component) {
-    data<T>[typeid(component).name()] = component;
+void registerCompoment(T *component) {
     componentsRegistry<T>[typeid(component).name()].push_back(component);
 }
 
@@ -28,8 +24,9 @@ void registerEntityComponent(int id, T *component) {
 
 template<typename T>
 T* getEntityComponent(int id) {
-    std::map<const char*, T*> test = entitiesRegistry<std::map<const char*, T*>>[id];
     return entitiesRegistry<T>[id][typeid(T).name()];
 }
+
+
 
 #endif //REGISTRY_H
