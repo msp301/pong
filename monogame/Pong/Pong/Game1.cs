@@ -54,6 +54,16 @@ public class Game1 : Game
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
+        var controllerState = GamePad.GetState(PlayerIndex.One);
+        if (controllerState.DPad.Left == ButtonState.Pressed)
+        {
+            _playerRectangle.X -= 10;
+        }
+        else if (controllerState.DPad.Right == ButtonState.Pressed)
+        {
+            _playerRectangle.X += 10;
+        }
+
         // TODO: Add your update logic here
         var keyState = Keyboard.GetState();
         if (keyState.IsKeyDown(Keys.A))
