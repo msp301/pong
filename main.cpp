@@ -22,10 +22,10 @@ int main(int argv, char **args) {
     auto* foo = new Position(1, 2);
     data<Position>["foo"] = foo;
 
-    registerComponent(foo);
-    auto val = getEntityComponent<Position>(entity->id());
-    auto pos = entity->get<Position>();
-    std::cout << entity->id() << pos->toString() << std::endl;
+    // registerComponent(foo);
+    // auto val = getEntityComponent<Position>(entity->id());
+    // auto pos = entity->get<Position>();
+    // std::cout << entity->id() << pos->toString() << std::endl;
 
     // registerCompoment(entity);
     // for (const auto& [key, values]: registry<Entity>) {
