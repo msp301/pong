@@ -1,11 +1,12 @@
-use sdl2::pixels::Color;
 use sdl2::event::Event;
+use sdl2::pixels::Color;
 
 fn main() {
     let sdl_context = sdl2::init().unwrap();
     let video_subsystem = sdl_context.video().unwrap();
 
-    let window = video_subsystem.window("Pong", 800, 600)
+    let window = video_subsystem
+        .window("Pong", 800, 600)
         .position_centered()
         .build()
         .unwrap();
@@ -25,9 +26,9 @@ fn main() {
 
         for event in event_pump.poll_iter() {
             match event {
-                Event::Quit {..} => {
+                Event::Quit { .. } => {
                     break 'running;
-                },
+                }
                 _ => {}
             }
         }
